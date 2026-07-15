@@ -2,9 +2,11 @@ pipeline {
     agent any
 
     stages {
-        stage('Hello') {
+        stage('Test GitHub SSH') {
             steps {
-                echo 'Hello World'
+                sshagent(['github-jenkins-ssh']) {
+                    sh 'ssh -T git@github.com || true'
+                }
             }
         }
     }
