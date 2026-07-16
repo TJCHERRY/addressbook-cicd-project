@@ -2,9 +2,19 @@ pipeline {
     agent any
 
     stages {
-        stage('Hello') {
+        stage('Stage1: Checkout Code from remote origin') {
             steps {
-                echo 'This is a Test for Pipeline As A Code'
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: 'jenkins-ssh-git', url: 'git@github.com:TJCHERRY/addressbook-cicd-project.git']])
+            }
+        }
+        stage('Stage2: Compile Code'){
+            steps{
+            def result = sh(
+                script: 'mvn compile',
+                returnStatus: true
+            )
+
+            echo "Maven exit code: ${result}"
             }
         }
     }
