@@ -9,12 +9,14 @@ pipeline {
         }
         stage('Stage2: Compile Code'){
             steps{
-            def result = sh(
-                script: 'mvn compile',
-                returnStatus: true
-            )
+            script {
+                 def result = sh(
+                    script: 'mvn compile',
+                    returnStatus: true
+                    )
 
-            echo "Maven exit code: ${result}"
+                echo "Maven exit code: ${result}"
+                }
             }
         }
     }
