@@ -19,5 +19,27 @@ pipeline {
                 }
             }
         }
+        stage('Stage3: Test code'){
+            steps{
+                sh 'mvn test'
+            }
+        }
+         stage('QA of the Code') {
+            steps {
+                // Generates the checkstyle-result.xml file inside target/
+                sh 'mvn checkstyle:checkstyle'
+            }
+            post {
+                always {
+                    // Visualizes findings directly in the Jenkins Build Dashboard
+                    recordIssues tools: [checkStyle(pattern: '**/target/checkstyle-result.xml')]
+                }
+            }
+        }
+        stage('Stage5 : Package The Code'){
+            steps{
+            sh 'mvn package'
+            }
+        }
     }
 }
