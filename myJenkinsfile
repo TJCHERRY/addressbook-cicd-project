@@ -41,7 +41,7 @@ pipeline {
             sh 'mvn package'
             }
         }
-        stage("deploy the project"){
+        stage("Stage 6: Deploy the project"){
             steps{
             sh "sudo cp /var/lib/jenkins/workspace/my-addressbook-pipeline/target/addressbook.war /root/apache-tomcat-9.0.120/webapps"
             }
